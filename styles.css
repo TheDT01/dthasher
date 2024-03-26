@@ -1,6 +1,6 @@
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #2980b9, #2c3e50);
+  background: linear-gradient(135deg, #1f1c2c, #928dab);
   margin: 0;
   padding: 20px;
   display: flex;
@@ -12,17 +12,18 @@ body {
 .container {
   max-width: 500px;
   background: #fff;
-  background: linear-gradient(to bottom, #ffffff, #f6f6f6);
-  border-radius: 15px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  animation: fadeInUp 0.6s ease both;
-  padding: 40px;
+  border-radius: 30px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  animation: fadeInUp 0.8s ease both;
+  padding: 50px;
+  position: relative;
+  overflow: hidden;
 }
 
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(40px);
   }
   to {
     opacity: 1;
@@ -32,106 +33,119 @@ body {
 
 h1 {
   text-align: center;
-  color: #333;
-  margin-bottom: 20px;
-  font-size: 28px;
-  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+  color: #fff;
+  margin-bottom: 30px;
+  font-size: 36px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .input-container,
 .output-container {
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 label {
   display: block;
-  margin-bottom: 5px;
-  color: #333;
+  margin-bottom: 10px;
+  color: #fff;
   font-weight: bold;
+  font-size: 18px;
 }
 
 textarea {
   width: 100%;
-  height: 100px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  height: 120px;
+  padding: 12px;
+  border: none;
+  border-radius: 15px;
+  background: rgba
+  (255, 255, 255, 0.1);
   resize: none;
-  transition: border-color 0.3s ease;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  color: #fff;
+  font-size: 16px;
 }
 
 textarea:focus {
-  border-color: #3498db;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
 }
 
 button {
   display: block;
   width: 100%;
-  padding: 12px;
-  margin-top: 15px;
+  padding: 15px;
   border: none;
-  border-radius: 8px;
-  background: #3498db;
+  border-radius: 25px;
+  background: linear-gradient(to right, #ff4e50, #f9d423);
   color: #fff;
   font-size: 18px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background 0.3s ease;
   text-transform: uppercase;
 }
 
 button:hover {
-  background: #2980b9;
+  background: linear-gradient(to right, #ff5f6d, #ffc371);
 }
 
 #savedHashes {
-  margin-top: 20px;
+  margin-top: 40px;
+  color: #fff;
+}
+
+#savedHashes h2 {
+  color: #fff;
+  font-size: 24px;
+  margin-bottom: 15px;
 }
 
 #savedHashes div {
-  padding: 12px;
-  background: #ecf0f1;
-  border-radius: 8px;
-  margin-bottom: 10px;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
 }
 
 #downloadHashesBtn {
-  background: #27ae60;
+  background: linear-gradient(to right, #2c3e50, #3498db);
 }
 
 #downloadHashesBtn:hover {
-  background: #219d55;
+  background: linear-gradient(to right, #2980b9, #2c3e50);
 }
 
 #resetBtn {
-  background: #e74c3c;
+  background: linear-gradient(to right, #d35400, #e74c3c);
 }
 
 #resetBtn:hover {
-  background: #c0392b;
+  background: linear-gradient(to right, #e74c3c, #d35400);
 }
 
 .wave {
   position: absolute;
-  width: 100%;
-  height: 150px;
-  bottom: 0;
-  left: 0;
-  background: url('https://cdn.jsdelivr.net/gh/daneden/animate.css/animate.min.css') repeat-x bottom;
-  animation: wave 10s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
+  width: 200%;
+  height: 400px;
+  bottom: -200px;
+  left: -50%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0.1) 100%);
+  animation: wave 15s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
   transform-origin: center bottom;
-  opacity: 0.6;
-  z-index: 1;
+  z-index: 0;
 }
 
 @keyframes wave {
   0% {
-    transform: translateX(0) translateY(10px);
+    transform: translateX(0) translateY(20px);
   }
   50% {
-    transform: translateX(-50%) translateY(5px);
+    transform: translateX(-50%) translateY(15px);
   }
   100% {
-    transform: translateX(-100%) translateY(10px);
+    transform: translateX(-100%) translateY(20px);
   }
 }
+
+ 

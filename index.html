@@ -7,26 +7,25 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <div class="wave"></div>
   <div class="container">
     <h1>DT Hasher</h1>
     <div class="input-container">
-      <label for="inputText">Input Text:</label>
-      <textarea id="inputText" placeholder="Enter your text here"></textarea>
+      <label for="textInput">Enter Text:</label>
+      <textarea id="textInput" placeholder="Type your text here..."></textarea>
     </div>
     <div class="output-container">
-      <label for="outputHash">Output Hash:</label>
-      <textarea id="outputHash" readonly></textarea>
+      <label for="hashOutput">Hash Output:</label>
+      <textarea id="hashOutput" readonly></textarea>
     </div>
-    <button id="generateHashBtn">Generate Hash</button>
     <button id="saveHashBtn">Save Hash</button>
-    <button id="downloadHashesBtn">Download Hashes</button>
     <button id="resetBtn">Reset</button>
-    <div id="savedHashes"></div>
+    <div id="savedHashes">
+      <h2>Saved Hashes</h2>
+      <div id="hashList"></div>
+      <button id="downloadHashesBtn">Download Hashes</button>
+    </div>
   </div>
-  
-
-
   <script src="script.js"></script>
-  <div class="wave"></div>
 </body>
 </html>
