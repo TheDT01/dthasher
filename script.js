@@ -1,68 +1,88 @@
-const textInput = document.getElementById('textInput');
-const hashOutput = document.getElementById('hashOutput');
-const saveHashBtn = document.getElementById('saveHashBtn');
-const resetBtn = document.getElementById('resetBtn');
-const hashList = document.getElementById('hashList');
-const downloadHashesBtn = document.getElementById('downloadHashesBtn');
+document.addEventListener("DOMContentLoaded", function() {
+  const inputText = document.getElementById("inputText");
+  const outputHash = document.getElementById("outputHash");
+  const generateHashBtn = document.getElementById("generateHashBtn");
+  const saveHashBtn = document.getElementById("saveHashBtn");
+  const downloadHashesBtn = document.getElementById("downloadHashesBtn");
+  const resetBtn = document.getElementById("resetBtn");
+  const savedHashesContainer = document.getElementById("savedHashes");
 
-// Function to calculate SHA-256 hash
-const calculateHash = (text) => {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(text);
-  return crypto.subtle.digest('SHA-256', data).then(hashBuffer => {
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
-    return hashHex;
+  let savedHashes = []; // Array to store saved hashes and texts
+
+  generateHashBtn.addEventListener("click", function() {
+    generateHash();
   });
-};
 
-// Function to add a hash to the list
-const addHashToList = (text, hash) => {
-  const div = document.createElement('div');
-  div.textContent = `${text} : ${hash}`;
-  hashList.appendChild(div);
-};
+  inputText.addEventListener("input", function() {
+    generateHash();
+  });
 
-// Event listener for Save Hash button
-saveHashBtn.addEventListener('click', async () => {
-  const text = textInput.value.trim();
-  if (text === '') {
-    alert('Please enter some text.');
-    return;
+  inputText.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+      event.preventDefault(); 
+      generateHash();
+    }
+  });
+
+  saveHashBtn.addEventListener("click", function() {
+    const hash = outputHash.value;
+    if (hash) {
+      const text = inputText.value.trim();
+      saveHash(text, hash);
+    } else {
+      alert("No hash to save. Generate a hash first.");
+    }
+  });
+
+  downloadHashesBtn.addEventListener("click", function() {
+    downloadHashes();
+  });
+
+  resetBtn.addEventListener("click", function() {
+    inputText.value = "";
+    outputHash.value = "";
+  });
+
+  function generateHash() {
+    const text = inputText.value;
+    sha256(text)
+      .then(hash => {
+        outputHash.value = hash;
+      })
+      .catch(error => {
+        console.error("Error generating hash:", error);
+      });
   }
 
-  try {
-    const hash = await calculateHash(text);
-    hashOutput.value = hash;
-    addHashToList(text, hash);
-  } catch (error) {
-    console.error('Error calculating hash:', error);
-    alert('An error occurred while calculating the hash.');
+  function sha256(input) {
+    const buffer = new TextEncoder("utf-8").encode(input);
+    return crypto.subtle.digest("SHA-256", buffer).then(function(hash) {
+      return Array.from(new Uint8Array(hash))
+        .map(b => b.toString(16).padStart(2, "0"))
+        .join("");
+    });
   }
-});
 
-// Event listener for Reset button
-resetBtn.addEventListener('click', () => {
-  textInput.value = '';
-  hashOutput.value = '';
-  hashList.innerHTML = '';
-});
+  function saveHash(text, hash) {
+    savedHashes.push({ text, hash });
+    const hashElement = document.createElement("div");
+    hashElement.textContent = `${text} - ${hash}`;
+    savedHashesContainer.appendChild(hashElement);
+  }
 
-// Event listener for Download Hashes button
-downloadHashesBtn.addEventListener('click', () => {
-  const hashesText = Array.from(hashList.children)
-    .map(div => div.textContent)
-    .join('\n');
+  function downloadHashes() {
+    if (savedHashes.length === 0) {
+      alert("No hashes to download.");
+      return;
+    }
 
-  const blob = new Blob([hashesText], { type: 'text/plain' });
-  const url = URL.createObjectURL(blob);
+    const content = savedHashes.map(item => `${item.text} - ${item.hash}`).join("\n");
+    const blob = new Blob([content], { type: "text/plain" });
 
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'saved_hashes.txt';
-  document.body.appendChild(a);
-  a.click();
-
-  URL.revokeObjectURL(url);
-  document.body.removeChild(a);
+    // Create a link element to trigger the download
+    const downloadLink = document.createElement("a");
+    downloadLink.href = URL.createObjectURL(blob);
+    downloadLink.download = "saved_hashes.txt";
+    downloadLink.click();
+  }
 });
